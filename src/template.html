@@ -4,14 +4,45 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Weather</title>
 </head>
 
 <body>
-  <h1>Template</h1>
-  <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Distinctio recusandae labore, commodi modi expedita fugit
-    ullam, eos voluptatem dignissimos nostrum perspiciatis voluptatibus repellat illo nihil, fuga iusto molestias
-    temporibus! Quia.</p>
+  <div class="primary card">
+    <h4 class="location">College Station, Texas</h4>
+    <h5 class="day-time">Saturday 2:25 PM</h5>
+    <div class="alerts">
+      <img class="icon" src="./icons/alert.svg" alt="alert icon" height="32" width="32">
+      <p>Wind Advisory</p>
+      <p class="seperator">|</p>
+      <p>Red Flag Warning</p>
+    </div>
+    <h1 class="current-temp">77<span class="degree-symbol">&deg;</span><span class="degree-unit">F</span></h1>
+    <div class="conditions inline-card">
+      <div class="wind">
+        <img class="icon" src="./icons/arrow.svg" alt="wind arrow icon" height="32" width="32">
+        <p>5 mph</p>
+      </div>
+      <div class="precip">
+        <img class="icon" src="./icons/water.svg" alt="water drop icon" height="32" width="32">
+        <p>0%</p>
+      </div>
+      <div class="humidity">
+        <img class="icon" src="./icons/cloud-percent.svg" alt="humidity icon" height="32" width="32">
+        <p>25%</p>
+      </div>
+    </div>
+    <div class="visual">
+      <svg width="200" height="200">
+        <circle cx="100" cy="100" r="50" stroke="black" stroke-width="2" fill="yellow" />
+      </svg>
+    </div>
+    <div class="temp-chart">
+      <div class="chart"></div>
+      <div class="chart-hours">3 PM 6 PM 9 PM 12 AM 3 AM 6 AM 9 AM</div>
+    </div>
+
+  </div>
 </body>
 
 </html>
