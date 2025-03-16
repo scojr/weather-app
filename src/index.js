@@ -1,3 +1,4 @@
-import { greeting } from "./greeting.js";
+import "./style.css";
+import { getWeather } from "./weather";
 
-console.log(greeting);
+getWeather();
