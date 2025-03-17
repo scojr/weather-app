@@ -9,15 +9,18 @@
 
 <body>
   <div class="primary card">
-    <h4 class="location">College Station, Texas</h4>
-    <h5 class="day-time">Saturday 2:25 PM</h5>
+    <div class="location">
+      <img class="icon" src="./icons/map-marker.svg" alt="map icon" height="32" width="32">
+      <h3>College Station, Texas</h3>
+    </div>
+    <h4 class="day-time">Saturday 2:25 PM</h4>
     <div class="alerts">
       <img class="icon" src="./icons/alert.svg" alt="alert icon" height="32" width="32">
       <p>Wind Advisory</p>
       <p class="seperator">|</p>
       <p>Red Flag Warning</p>
     </div>
-    <h1 class="current-temp">77<span class="degree-symbol">&deg;</span><span class="degree-unit">F</span></h1>
+    <h1 class="current-temp">77<span class="degree-symbol">&deg;F</span></h1>
     <div class="conditions inline-card">
       <div class="wind">
         <img class="icon" src="./icons/arrow.svg" alt="wind arrow icon" height="32" width="32">
@@ -33,15 +36,47 @@
       </div>
     </div>
     <div class="visual">
-      <svg width="200" height="200">
-        <circle cx="100" cy="100" r="50" stroke="black" stroke-width="2" fill="yellow" />
-      </svg>
     </div>
+    <ul class="forecast-temps">
+      <li>72</li>
+      <li>62</li>
+      <li>55</li>
+      <li>49</li>
+      <li>47</li>
+      <li>55</li>
+    </ul>
     <div class="temp-chart">
-      <div class="chart"></div>
-      <div class="chart-hours">3 PM 6 PM 9 PM 12 AM 3 AM 6 AM 9 AM</div>
+      <div>
+        <ul id="forecast">
+          <li style="
+          --value: 72%; --value-text: '72%';
+          --previous-value: 74%;"></li>
+          <li style="
+          --value: 62%; --value-text: '62%';
+          --previous-value: 72%;"></li>
+          <li style="
+          --value: 55%; --value-text: '55%';
+          --previous-value: 62%;"></li>
+          <li style="
+          --value: 49%; --value-text: '49%';
+          --previous-value: 55%;"></li>
+          <li style="
+          --value: 47%; --value-text: '47%';
+          --previous-value: 49%;"></li>
+          <li style="
+          --value: 55%; --value-text: '55%';
+          --previous-value: 47%;"></li>
+        </ul>
+      </div>
     </div>
-
+    <ul class="forecast-times">
+      <li>3 PM</li>
+      <li>6 PM</li>
+      <li>9 PM</li>
+      <li>12 AM</li>
+      <li>3 AM</li>
+      <li>6 AM</li>
+    </ul>
   </div>
 </body>
 
