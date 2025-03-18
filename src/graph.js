@@ -27,30 +27,41 @@ export class Graph {
 
   addGraphToDOMElement(element) {
     const graph = this.getUlElement();
-    const outline = this.getUlElement();
-    outline.classList.add('outline');
+    const graphLabels = this.getLabelsOf(graph);
     element.append(graph);
-    element.append(outline);
+    element.append(graphLabels);
+  }
+
+  getLabelsOf(graph) {
+    const labelList = document.createElement('ul')
+    labelList.classList.add('label-list');
+    this.dataPoints.forEach((data) => {
+      const indexOfData = this.dataPoints.indexOf(data);
+      const label = document.createElement('li');
+      label.dataset.value = data;
+      label.setAttribute('style', `--normalized-value: ${this.dataPointsNormalized[indexOfData]}%`)
+      label.textContent = data;
+      label.classList.add('label');
+      labelList.append(label);
+    })
+    return labelList;
   }
 
   getUlElement() {
     const ul = document.createElement('ul');
     ul.classList.add('graph');
-    let previousValue;
-    this.dataPointsNormalized.forEach((data) => {
+    let previousValue = this.dataPointsNormalized[0];
+    this.dataPointsNormalized.slice(1).forEach((data) => {
       const li = document.createElement('li');
       li.setAttribute('style',
         `--value: ${data}%;
-        --previous-value: ${(() => {
-          if (typeof (previousValue) === "number") {
-            return previousValue;
-          } else {
-            return data;
-          }
-        })()}%`)
+        --previous-value: ${previousValue}%`)
       ul.append(li);
       previousValue = data;
     })
-    return ul;
+    const graphContainer = document.createElement('div');
+    graphContainer.classList.add('graph-container');
+    graphContainer.append(ul);
+    return graphContainer;
   }
 }
