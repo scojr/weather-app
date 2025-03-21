@@ -1,3 +1,5 @@
+import dom from "./dom-interface";
+
 export function initiateDisplayController() {
   const currentConditions = new CurrentConditions(document.querySelector(".primary"));
   return { currentConditions }
