@@ -10,12 +10,27 @@
 <body>
   <div class="card-container flex-column">
     <div class="card card-label top-label flex">
-      <div class="location flex">
-        <img class="icon" src="./icons/map-marker.svg" alt="map icon" height="32" width="32">
-        <h3 class="location-text">College Station, Texas</h3>
+      <div class="logo-container">
+        <div class="logo">
+          <span class="logo-text">
+            ODIN<br><span>WEATHER</span>
+          </span>
+        </div>
+      </div>
+      <div class="location-input">
+        <label for="location-search">City, Zip Code, or Address</label>
+        <input type="text" id="location-search" name="location-search" placeholder="City, Zip Code, or Address">
+        <button class="location-search-button">Go</button>
+        <div class="location flex">
+          <img class="icon" src="./icons/map-marker.svg" alt="map icon" height="32" width="32">
+          <h3 class="location-text">College Station, Texas</h3>
+        </div>
       </div>
 
-      <h4 class="day-time">Saturday 2:25 PM</h4>
+      <h4 class="day-time">
+        <p class="date">Saturday, March 18</p>
+        <p class="time">2:25 PM</p>
+      </h4>
     </div>
 
     <div class="card card-label">
