@@ -9,7 +9,7 @@ const currentConditons = {
   alert: document.querySelector(".primary-alert"),
   alertText: document.querySelector(".alert-text"),
   description: document.querySelector(".description-text"),
-  visual: document.querySelector(".visual"),
+  visual: document.querySelector(".visual>img"),
   currentTemp: document.querySelector(".current-temp"),
   description: document.querySelector(".description-text"),
   feelsLikeValue: document.querySelector(".feels-like-value"),
@@ -25,7 +25,7 @@ const currentConditons = {
 const dailyForecast = {
   dayLabels: document.querySelectorAll(".day-label"),
   forecastVisuals: document.querySelectorAll(".forecast-visual"),
-  forecastDescriptions: document.querySelectorAll(".description"),
+  forecastDescriptions: document.querySelectorAll(".forecast-descriptions .description"),
   forecastHighs: document.querySelectorAll(".forecast-high"),
   forecastLows: document.querySelectorAll(".forecast-low"),
 };

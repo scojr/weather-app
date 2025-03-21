@@ -6,6 +6,14 @@
   padding: 0;
 }
 
+@import url('https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+.barlow {
+  font-family: "Barlow", sans-serif;
+  font-weight: 900;
+  font-style: normal;
+}
+
 :root {
   --light: white;
   --dark: black;
@@ -24,7 +32,7 @@
 
 html {
   line-height: normal;
-  font-family: Bahnschrift, 'DIN Alternate', 'Franklin Gothic Medium', 'Nimbus Sans Narrow', sans-serif-condensed, sans-serif;
+  font-family: "Barlow", Bahnschrift, 'DIN Alternate', 'Franklin Gothic Medium', 'Nimbus Sans Narrow', sans-serif-condensed, sans-serif;
   font-weight: normal;
 }
 
@@ -112,11 +120,9 @@ body {
 }
 
 .visual {
+  --weather-icon: clear-day;
   height: 5rem;
   aspect-ratio: 1 / 1;
-  background-image: url("./weather-icons/clear-day.svg");
-  background-position: center;
-  background-repeat: no-repeat;
   filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.7));
 }
 
@@ -382,6 +388,14 @@ li {
   }
 }
 
+.logo-container {
+  background-image: url(./images/logo.png);
+  background-origin: border-box;
+  background-position: left;
+  background-repeat: no-repeat;
+  background-position-x: -1px;
+}
+
 .logo {
   height: 73px;
   width: 125px;
@@ -394,11 +408,12 @@ li {
   text-shadow: none;
   text-align: center;
   user-select: none;
+  visibility: hidden;
 
   .logo-text {
     position: absolute;
-    left: 3px;
-    bottom: 2px;
+    left: 6px;
+    bottom: 5px;
     font-size: 3rem;
     font-weight: 900;
     line-height: 40%;

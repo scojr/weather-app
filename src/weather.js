@@ -1,77 +1,55 @@
 import { sampleQuery } from "./sample-data";
-import { today, add7Days } from "./date-handler";
+import { today, add7Days, getDayFromDate } from "./date-handler";
+import { hu } from "date-fns/locale";
 
 // const key = "TDN8ACSEEJLR32KZURV9PT8Q6";
 // let location = "77840";
 // const API = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}/${today}/${add7Days}?key=${key}`
-let query;
-let forecast;
-let conditions;
+
+let currentConditions;
+let dailyForecast;
 
 
 export async function getWeather() {
   // const response = await fetch(API);
   // const data = await response.json();
   const data = sampleQuery;
-  query = data;
-  console.log(data);
-
-  forecast = get7DayForecast();
-  conditions = getCurrentConditions();
+  currentConditions = getCurrentConditions(data);
+  dailyForecast = get7DayForecast(data);
+  return { currentConditions, dailyForecast };
 }
 
-const currentConditions = {
-  temp: function () {
-    return query.currentConditions.temp;
-  },
-  precipitation: function () {
-    return query.currentConditions.precip;
-  },
+function getCurrentConditions(data) {
+  const conditions = data.currentConditions.conditions;
+  const icon = data.currentConditions.icon;
+  const temp = Math.round(data.currentConditions.temp);
+  const tempMax = Math.round(data.days[0].tempmax);
+  const tempMin = Math.round(data.days[0].tempmin);
+  const feelsLike = data.currentConditions.feelslike;
+  const precipProb = data.currentConditions.precipprob;
+  const humidity = Math.round(data.currentConditions.humidity);
+  const windDir = data.currentConditions.winddir;
+  const windSpeed = data.currentConditions.windspeed;
+  const visibility = data.currentConditions.visibility;
+  const uvIndex = data.currentConditions.uvindex;
+  return { conditions, icon, temp, tempMax, tempMin, feelsLike, precipProb, humidity, windDir, windSpeed, visibility, uvIndex }
 }
 
-function getCurrentConditions() {
-  const conditions = query.currentConditions.conditions;
-  const cloudcover = query.currentConditions.cloudcover;
-  const temp = query.currentConditions.temp;
-  const humidity = query.currentConditions.humidity;
-  const feelslike = query.currentConditions.feelslike;
-  const uvIndex = query.currentConditions.uvIndex;
-  const precip = query.currentConditions.precip;
-  const precipProb = query.currentConditions.precipprob;
-  const precipType = query.currentConditions.preciptype;
-  const snow = query.currentConditions.snow;
-  const windDir = query.currentConditions.winddir;
-  const windGust = query.currentConditions.windgust;
-  const windSpeed = query.currentConditions.windspeed;
-  const moonphase = query.currentConditions.moonphase;
-  return { conditions, cloudcover, temp, humidity, feelslike, uvIndex, precip, precipProb, precipType, snow, windDir, windGust, windSpeed, moonphase }
-
-}
 
 function getForecastOfDay(input) {
   const date = input.datetime;
-  const tempMax = input.tempmax;
-  const tempMin = input.tempMin;
+  const weekday = getDayFromDate(date);
+  const icon = input.icon;
+  const tempMax = Math.round(input.tempmax);
+  const tempMin = Math.round(input.tempmin);
   const conditions = input.conditions;
-  const precipProb = input.precipprob;
-  const precipType = input.preciptype;
-  const humidity = input.humidity;
-  const windDir = input.winddir;
-  const windGust = input.windgust;
-  const windSpeed = input.windspeed;
-
-  const day = { date, tempMax, tempMin, conditions, precipProb, precipType, humidity, windDir, windGust, windSpeed }
-
+  const day = { date, weekday, icon, tempMax, tempMin, conditions }
   return day;
 }
 
-function get7DayForecast() {
+function get7DayForecast(data) {
   const days = [];
-  const daysData = query.days;
+  const daysData = data.days.splice(1);
   daysData.forEach((day) => days.push(getForecastOfDay(day)));
   return days;
-}
-
-window.logConditions = function logCurrentConditions() {
-  console.log({ forecast, conditions });
 }
