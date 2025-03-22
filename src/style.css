@@ -304,6 +304,10 @@ body {
   }
 }
 
+.forecast-visual-container {
+  justify-content: space-between;
+}
+
 .forecast-temps .card::after {
   position: absolute;
   padding: 0;

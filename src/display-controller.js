@@ -1,15 +1,35 @@
+import { getTodaysDate, getTime, today } from "./date-handler";
 import dom from "./dom-interface";
 import { Graph } from "./graph";
 
+setInterval(setTime, 1000)
+
+export function setHeader(input) {
+  const set = dom.header;
+  set.locationText.textContent = `${input.location.city}, ${input.location.state}`
+  set.date.textContent = getTodaysDate();
+  setTime();
+}
+
+function setTime() {
+  dom.header.time.textContent = getTime();
+}
 
 export function setCurrentConditions(input) {
   const set = dom.currentConditons;
+
+  if (input.alerts[0]) {
+    set.alertText = input.alerts[0]
+    set.alert.style.display = "block";
+  } else {
+    set.alert.style.display = "none";
+  }
 
   import(`./weather-icons/${input.icon}.svg`).then((resolve) => {
     set.visual.src = resolve.default;
   })
   set.currentTemp.textContent = input.temp;
-  set.feelsLikeValue.textContent = input.feelslike;
+  set.feelsLikeValue.textContent = input.feelsLike;
   set.todayHighValue.textContent = input.tempMax;
   set.todayLowValue.textContent = input.tempMin;
   set.precipitationValue.textContent = input.precipProb + '%';
@@ -40,9 +60,25 @@ export function setDailyForecast(input) {
   })
 }
 
-drawGraph()
+export function formatHourlyTemps(input) {
+  const currentHour = new Date().getHours();
+  const todaysHours = input[0].hours.splice(currentHour);
+  if (todaysHours.length = 24) {
+    return todaysHours;
+  } else {
+    const hoursDifference = 24 - todaysHours.length;
+    const tomorrowsHours = input[1].hours.slice(0, hoursDifference);
+    return todaysHours.concat(tomorrowsHours);
+  }
+}
 
-function drawGraph(...temps) {
+export function drawGraph(object) {
+  let hours = [];
+  object.forEach((hour) => {
+    hours.push(hour.temp);
+  })
+  console.log(hours);
+
   const graph = new Graph(72, 62, 55, 49, 47, 55, 26, 32, 11, 55, 0, 11);
   const graphElement = document.querySelector('.hourly-forecast');
   graph.addGraphToDOMElement(graphElement);

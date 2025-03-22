@@ -1,4 +1,4 @@
-import { add, addDays, getDay } from "date-fns";
+import { format, add, addDays, getDay } from "date-fns";
 
 const date = new Date();
 
@@ -18,3 +18,25 @@ export function getDayFromDate(date) {
   const weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
   return weekdays[getDay(date)];
 }
+
+export function getTodaysDate() {
+  return format(date, "eeee, MMMM d")
+}
+
+
+export function getTime() {
+  const time = new Date();
+  let suffix = "AM";
+  let hour = time.getHours()
+  if (hour > 12) {
+    suffix = "PM";
+    hour = hour - 12;
+  }
+  let minute = time.getMinutes()
+  if (minute < 10) {
+    minute = "0" + minute;
+  }
+  return `${hour}:${minute} ${suffix}`;
+}
+
+// setInterval(updateTime, 1000);

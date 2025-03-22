@@ -1,13 +1,14 @@
 import "./style.css";
 import { getWeather } from "./weather";
-import { setCurrentConditions, setDailyForecast } from "./display-controller";
+import { setHeader, setCurrentConditions, setDailyForecast, formatHourlyTemps, drawGraph } from "./display-controller";
+
 
 async function setWeatherResults() {
   const result = await getWeather();
-  console.log(result.currentConditions);
-  console.log(result.dailyForecast);
+  setHeader(result.currentConditions);
   setCurrentConditions(result.currentConditions);
   setDailyForecast(result.dailyForecast);
+  drawGraph(formatHourlyTemps(result.dailyData));
 }
 
 const weather = setWeatherResults();
