@@ -136,5 +136,5 @@ export function convertCheck(unit) {
   if (isCelsius) {
     return Math.round((unit - 32) * 5 / 9);
   }
-  else return unit;
+  else return Math.round(unit);
 }
