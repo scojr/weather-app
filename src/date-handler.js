@@ -28,15 +28,38 @@ export function getTime() {
   const time = new Date();
   let suffix = "AM";
   let hour = time.getHours()
-  if (hour > 12) {
+  if (hour >= 12) {
     suffix = "PM";
-    hour = hour - 12;
+    if (hour > 12) {
+      hour = hour - 12;
+    }
+  }
+  if (hour === 0) {
+    hour = 12;
   }
   let minute = time.getMinutes()
   if (minute < 10) {
     minute = "0" + minute;
   }
   return `${hour}:${minute} ${suffix}`;
+}
+
+export function formatGraphTime(time) {
+  let splitTime = time.split(':');
+  let suffix = "AM";
+
+  let hour = parseInt(splitTime[0]);
+
+  if (hour >= 12) {
+    suffix = "PM";
+    if (hour > 12) {
+      hour = hour - 12;
+    }
+  }
+  if (hour === 0) {
+    hour = 12;
+  }
+  return `${hour} ${suffix}`;
 }
 
 // setInterval(updateTime, 1000);

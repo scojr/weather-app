@@ -2,6 +2,7 @@ import { sampleQuery } from "./sample-data";
 import { getLocation, location } from "./location";
 import { today, add7Days, getDayFromDate } from "./date-handler";
 import { hu } from "date-fns/locale";
+import { parseJSON } from "date-fns";
 
 // const key = "TDN8ACSEEJLR32KZURV9PT8Q6";
 // let location = "77840";
@@ -14,8 +15,11 @@ export async function getWeather() {
   // const response = await fetch(API);
   // const data = await response.json();
   const data = sampleQuery;
+
   getLocation(data.latitude, data.longitude);
-  const dailyData = data.days;
+  function dailyData() {
+    return data.days;
+  };
   currentConditions = getCurrentConditions(data);
   dailyForecast = get7DayForecast(data);
   return { dailyData, currentConditions, dailyForecast };
@@ -52,7 +56,7 @@ function getForecastOfDay(input) {
 
 function get7DayForecast(data) {
   const days = [];
-  const daysData = data.days.splice(1);
+  const daysData = data.days.slice(1);
   daysData.forEach((day) => days.push(getForecastOfDay(day)));
   return days;
 }

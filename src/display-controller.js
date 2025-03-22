@@ -1,3 +1,4 @@
+import { constructFrom } from "date-fns/fp";
 import { getTodaysDate, getTime, today } from "./date-handler";
 import dom from "./dom-interface";
 import { Graph } from "./graph";
@@ -62,8 +63,8 @@ export function setDailyForecast(input) {
 
 export function formatHourlyTemps(input) {
   const currentHour = new Date().getHours();
-  const todaysHours = input[0].hours.splice(currentHour);
-  if (todaysHours.length = 24) {
+  const todaysHours = input[0].hours.slice(currentHour);
+  if (todaysHours.length === 24) {
     return todaysHours;
   } else {
     const hoursDifference = 24 - todaysHours.length;
@@ -75,11 +76,17 @@ export function formatHourlyTemps(input) {
 export function drawGraph(object) {
   let hours = [];
   object.forEach((hour) => {
-    hours.push(hour.temp);
+    hours.push(new Hour(hour.datetime, hour.temp));
   })
-  console.log(hours);
-
-  const graph = new Graph(72, 62, 55, 49, 47, 55, 26, 32, 11, 55, 0, 11);
+  const graph = new Graph(hours);
   const graphElement = document.querySelector('.hourly-forecast');
-  graph.addGraphToDOMElement(graphElement);
+  const timeLabels = document.querySelector('.time-labels');
+  graph.addGraphToDOMElement(graphElement, timeLabels);
+}
+
+class Hour {
+  constructor(time, temp) {
+    this.time = time;
+    this.temp = temp;
+  }
 }

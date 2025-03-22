@@ -8,7 +8,7 @@ async function setWeatherResults() {
   setHeader(result.currentConditions);
   setCurrentConditions(result.currentConditions);
   setDailyForecast(result.dailyForecast);
-  drawGraph(formatHourlyTemps(result.dailyData));
+  drawGraph(formatHourlyTemps(result.dailyData()));
 }
 
 const weather = setWeatherResults();
