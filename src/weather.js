@@ -5,8 +5,8 @@ import { hu } from "date-fns/locale";
 import { parseJSON } from "date-fns";
 
 // const key = "TDN8ACSEEJLR32KZURV9PT8Q6";
-// let location = "77840";
-// const API = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}/${today}/${add7Days}?key=${key}`
+// let zipCode = "77840";
+// const API = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${zipCode}/${today}/${add7Days}?key=${key}`
 
 let currentConditions;
 let dailyForecast;
@@ -15,6 +15,7 @@ export async function getWeather() {
   // const response = await fetch(API);
   // const data = await response.json();
   const data = sampleQuery;
+  console.log(data);
 
   getLocation(data.latitude, data.longitude);
   function dailyData() {

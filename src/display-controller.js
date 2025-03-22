@@ -11,11 +11,12 @@ async function setWeatherResults() {
   setHeader(result.currentConditions);
   setCurrentConditions(result.currentConditions);
   setDailyForecast(result.dailyForecast);
-  drawGraph(formatHourlyTemps(result.dailyData()));
+  drawGraph(formatHoursForGraph(result.dailyData()));
 }
 
 setInterval(setTime, 1000)
 let isCelsius = false;
+let isChartPrecip = false;
 
 export function setHeader(input) {
   const set = dom.header;
@@ -80,7 +81,7 @@ export function setDailyForecast(input) {
   })
 }
 
-export function formatHourlyTemps(input) {
+export function formatHoursForGraph(input) {
   const currentHour = new Date().getHours();
   const todaysHours = input[0].hours.slice(currentHour);
   if (todaysHours.length === 24) {
@@ -95,18 +96,19 @@ export function formatHourlyTemps(input) {
 export function drawGraph(object) {
   let hours = [];
   object.forEach((hour) => {
-    hours.push(new Hour(hour.datetime, hour.temp));
+    hours.push(new Hour(hour.datetime, hour.temp, hour.precipprob));
   })
-  const graph = new Graph(hours);
+  const graph = new Graph(hours, isChartPrecip);
   const graphElement = document.querySelector('.hourly-forecast');
   const timeLabels = document.querySelector('.time-labels');
   graph.addGraphToDOMElement(graphElement, timeLabels);
 }
 
 class Hour {
-  constructor(time, temp) {
+  constructor(time, temp, precipProb) {
     this.time = time;
     this.temp = temp;
+    this.precipProb = precipProb;
   }
 }
 
@@ -138,3 +140,24 @@ export function convertCheck(unit) {
   }
   else return Math.round(unit);
 }
+
+const chartTempButton = document.querySelector(".temp-button.chart");
+const chartPrecipButton = document.querySelector(".precip-button.chart");
+
+chartTempButton.addEventListener("click", function tempButtonClick(e) {
+  if (isChartPrecip) {
+    isChartPrecip = false;
+    chartPrecipButton.classList.remove("active");
+    chartTempButton.classList.add("active");
+    setWeatherResults();
+  }
+})
+
+chartPrecipButton.addEventListener("click", function precipButtonClick(e) {
+  if (!isChartPrecip) {
+    isChartPrecip = true;
+    chartTempButton.classList.remove("active");
+    chartPrecipButton.classList.add("active");
+    setWeatherResults();
+  }
+})
