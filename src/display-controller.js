@@ -1,9 +1,21 @@
 import { constructFrom } from "date-fns/fp";
 import { getTodaysDate, getTime, today } from "./date-handler";
+import { getWeather } from "./weather";
 import dom from "./dom-interface";
 import { Graph } from "./graph";
 
+setWeatherResults();
+
+async function setWeatherResults() {
+  const result = await getWeather();
+  setHeader(result.currentConditions);
+  setCurrentConditions(result.currentConditions);
+  setDailyForecast(result.dailyForecast);
+  drawGraph(formatHourlyTemps(result.dailyData()));
+}
+
 setInterval(setTime, 1000)
+let isCelsius = false;
 
 export function setHeader(input) {
   const set = dom.header;
@@ -29,10 +41,17 @@ export function setCurrentConditions(input) {
   import(`./weather-icons/${input.icon}.svg`).then((resolve) => {
     set.visual.src = resolve.default;
   })
-  set.currentTemp.textContent = input.temp;
-  set.feelsLikeValue.textContent = input.feelsLike;
-  set.todayHighValue.textContent = input.tempMax;
-  set.todayLowValue.textContent = input.tempMin;
+
+  if (isCelsius) {
+    set.currentTemp.style.setProperty('--unit', `"${'C'}"`);
+  } else {
+    set.currentTemp.style.setProperty('--unit', `"${'F'}"`);
+  }
+
+  set.currentTemp.textContent = convertCheck(input.temp);
+  set.feelsLikeValue.textContent = convertCheck(input.feelsLike);
+  set.todayHighValue.textContent = convertCheck(input.tempMax);
+  set.todayLowValue.textContent = convertCheck(input.tempMin);
   set.precipitationValue.textContent = input.precipProb + '%';
   set.humidityValue.textContent = input.humidity + '%';
   set.windValue.textContent = input.windSpeed + ' mph';
@@ -54,10 +73,10 @@ export function setDailyForecast(input) {
     day.textContent = input[index].conditions;
   })
   set.forecastHighs.forEach((day, index) => {
-    day.textContent = input[index].tempMax;
+    day.textContent = convertCheck(input[index].tempMax);
   })
   set.forecastLows.forEach((day, index) => {
-    day.textContent = input[index].tempMin;
+    day.textContent = convertCheck(input[index].tempMin);
   })
 }
 
@@ -89,4 +108,33 @@ class Hour {
     this.time = time;
     this.temp = temp;
   }
+}
+
+const fahrenheitButton = document.querySelector(".temp-button.fahrenheit");
+const celsiusButton = document.querySelector(".temp-button.celsius");
+
+fahrenheitButton.addEventListener("click", function fahrenheitButtonClick(e) {
+  if (isCelsius) {
+    isCelsius = false;
+    celsiusButton.classList.remove("active");
+    fahrenheitButton.classList.add("active");
+    setWeatherResults();
+  }
+})
+
+
+celsiusButton.addEventListener("click", function celsiusButtonClick(e) {
+  if (!isCelsius) {
+    isCelsius = true;
+    fahrenheitButton.classList.remove("active");
+    celsiusButton.classList.add("active");
+    setWeatherResults();
+  }
+})
+
+export function convertCheck(unit) {
+  if (isCelsius) {
+    return Math.round((unit - 32) * 5 / 9);
+  }
+  else return unit;
 }

@@ -1,8 +1,8 @@
 import { formatGraphTime } from "./date-handler";
+import { convertCheck } from "./display-controller";
 
 export class Graph {
   constructor(object) {
-    console.log(object);
     this.temps = [];
     this.times = [];
     object.forEach((data) => {
@@ -11,8 +11,6 @@ export class Graph {
     })
     this.tempsNormalized = this.normalizeTemps();
     this.timesFormatted = this.formatTimes()
-    console.log(this.tempsNormalized);
-    console.log(this.timesFormatted);
   }
 
   normalizeTemps() {
@@ -40,6 +38,8 @@ export class Graph {
   }
 
   addGraphToDOMElement(graphContainer, timeLabelContainer) {
+    graphContainer.innerHTML = '';
+    timeLabelContainer.innerHTML = '';
     const graph = this.getUlElement();
     const graphLabels = this.getLabelsOf();
     graphContainer.append(graph);
@@ -56,7 +56,6 @@ export class Graph {
       if (counter !== 1) {
         label.classList.add('hidden');
       }
-      console.log(counter);
       timeLabelContainer.append(label);
     })
   }
@@ -70,7 +69,7 @@ export class Graph {
       const label = document.createElement('li');
       label.dataset.value = data;
       label.setAttribute('style', `--normalized-value: ${this.tempsNormalized[indexOfData]}%`)
-      label.textContent = Math.round(data);
+      label.textContent = convertCheck(data);
       label.classList.add('label');
       if (counter === 2) {
         counter = 0;
@@ -102,15 +101,4 @@ export class Graph {
     graphContainer.append(ul);
     return graphContainer;
   }
-}
-
-function tweakPreviousValue(previousValue, value) {
-  if (previousValue > value) {
-    return previousValue - 1;
-  } else if (previousValue === value) {
-    return previousValue;
-  } else {
-    return previousValue + 1;
-  }
-
 }

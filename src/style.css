@@ -143,6 +143,7 @@ body {
 }
 
 .current-temp {
+  --unit: "F";
   position: relative;
   font-size: 4rem;
 
@@ -161,7 +162,7 @@ body {
 
 .current-temp::before {
   position: absolute;
-  content: "F";
+  content: var(--unit);
   font-size: 2rem;
   top: 10px;
   left: 130%;
