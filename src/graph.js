@@ -70,7 +70,7 @@ export class Graph {
       const label = document.createElement('li');
       label.dataset.value = data;
       label.setAttribute('style', `--normalized-value: ${this.tempsNormalized[indexOfData]}%`)
-      label.textContent = data;
+      label.textContent = Math.round(data);
       label.classList.add('label');
       if (counter === 2) {
         counter = 0;

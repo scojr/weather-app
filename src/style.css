@@ -74,6 +74,38 @@ body {
   height: 100vh;
 }
 
+.current-conditions {
+  justify-content: space-between;
+}
+
+.feels-like-value::after,
+.today-high-value::after,
+.today-low-value::after {
+  position: relative;
+  top: 2px;
+  left: 2px;
+  content: "°";
+}
+
+.today-high-value {
+  margin-right: 12px;
+}
+
+.unit-buttons {
+  gap: 12px;
+
+  .active {
+    border-bottom: 1px solid white;
+  }
+
+  button::after {
+    position: relative;
+    top: 2px;
+    left: 3px;
+    content: "°";
+  }
+}
+
 .primary {
   display: grid;
   grid-template-columns: 50% 50%;
@@ -111,12 +143,28 @@ body {
 }
 
 .current-temp {
+  position: relative;
   font-size: 4rem;
 
   span {
     font-size: 1.3rem;
     vertical-align: top;
   }
+}
+
+.current-temp::after {
+  position: absolute;
+  content: "°";
+  font-size: 3rem;
+  top: 10px
+}
+
+.current-temp::before {
+  position: absolute;
+  content: "F";
+  font-size: 2rem;
+  top: 10px;
+  left: 130%;
 }
 
 .visual {
@@ -257,6 +305,7 @@ body {
     grid-column: 1 / 2;
     grid-row: 1 / 2;
     place-self: start;
+    margin-top: -10px;
   }
 
   .forecast-low {
@@ -264,37 +313,63 @@ body {
     grid-row: 2 / 3;
     place-self: end right;
     text-align: right;
+    margin-right: 8px;
   }
 
   .forecast-high,
   .forecast-low {
     font-size: 2rem;
+    position: relative;
   }
 
-  @container (min-width: 80px) {
+  .forecast-high::after,
+  .forecast-low::after {
+    position: relative;
+    font-size: 0.8em;
+    content: "°";
+    top: -3px;
+  }
 
+  @container (min-width: 50px) {
     .forecast-high {
-      font-size: 3.1rem;
+      padding-top: 2px;
+      font-size: 2.2rem;
+    }
+
+    .forecast-low {
+      font-size: 1.6rem;
+      margin-right: 0;
+    }
+  }
+
+
+  @container (min-width: 90px) {
+    .forecast-high {
+      padding-top: 2px;
+      font-size: 3.3rem;
     }
 
     .forecast-low {
       font-size: 2.8rem;
+      margin-right: 6px;
     }
   }
 
   @container (min-width: 120px) {
-
     .forecast-high {
+      padding-top: 0;
       font-size: 4rem;
     }
 
     .forecast-low {
       font-size: 3rem;
+      margin-right: 8px;
     }
   }
 
-
 }
+
+
 
 .forecast-descriptions {
   text-align: center;
@@ -306,6 +381,19 @@ body {
 
 .forecast-visual-container {
   justify-content: space-between;
+  container-type: inline-size;
+
+  @container (min-width: 80px) {
+
+    .description {
+      font-size: 1rem;
+    }
+
+    .description {
+      font-size: 1.2rem;
+    }
+  }
+
 }
 
 .forecast-temps .card::after {
@@ -397,8 +485,9 @@ li {
   }
 
   .label::after {
-    position: absolute;
+    position: relative;
     top: 2px;
+    left: 2px;
     content: "°";
   }
 }
