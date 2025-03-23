@@ -60,6 +60,7 @@ export function setCurrentConditions(input) {
   set.feelsLikeValue.textContent = convertCheck(input.feelsLike);
   set.todayHighValue.textContent = convertCheck(input.tempMax);
   set.todayLowValue.textContent = convertCheck(input.tempMin);
+  set.description.textContent = input.conditions;
   set.precipitationValue.textContent = input.precipProb + '%';
   set.humidityValue.textContent = input.humidity + '%';
   set.windValue.textContent = input.windSpeed + ' mph';

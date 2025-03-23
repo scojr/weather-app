@@ -11,7 +11,6 @@ const currentConditons = {
   description: document.querySelector('.description-text'),
   visual: document.querySelector('.visual>img'),
   currentTemp: document.querySelector('.current-temp'),
-  description: document.querySelector('.description-text'),
   feelsLikeValue: document.querySelector('.feels-like-value'),
   todayHighValue: document.querySelector('.today-high-value'),
   todayLowValue: document.querySelector('.today-low-value'),
