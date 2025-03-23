@@ -59,7 +59,7 @@ export class Graph {
     let counter = 2;
     graphContainer.append(graphLabels);
     this.timesFormatted.forEach((hour, index) => {
-      const label = document.createElement("h4");
+      const label = document.createElement('h4');
       label.textContent = hour;
       if (counter === 2) {
         counter = 0;

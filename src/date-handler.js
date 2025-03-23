@@ -1,4 +1,4 @@
-import { format, add, addDays, getDay } from "date-fns";
+import { format, addDays, getDay } from "date-fns";
 
 const date = new Date();
 
@@ -20,16 +20,16 @@ export function getDayFromDate(date) {
 }
 
 export function getTodaysDate() {
-  return format(date, "eeee, MMMM d")
+  return format(date, 'eeee, MMMM d')
 }
 
 
 export function getTime() {
   const time = new Date();
-  let suffix = "AM";
+  let suffix = 'AM';
   let hour = time.getHours()
   if (hour >= 12) {
-    suffix = "PM";
+    suffix = 'PM';
     if (hour > 12) {
       hour = hour - 12;
     }
@@ -39,19 +39,19 @@ export function getTime() {
   }
   let minute = time.getMinutes()
   if (minute < 10) {
-    minute = "0" + minute;
+    minute = '0' + minute;
   }
   return `${hour}:${minute} ${suffix}`;
 }
 
 export function formatGraphTime(time) {
   let splitTime = time.split(':');
-  let suffix = "AM";
+  let suffix = 'AM';
 
   let hour = parseInt(splitTime[0]);
 
   if (hour >= 12) {
-    suffix = "PM";
+    suffix = 'PM';
     if (hour > 12) {
       hour = hour - 12;
     }

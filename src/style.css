@@ -143,7 +143,6 @@ body {
 }
 
 .current-temp {
-  --unit: "F";
   position: relative;
   font-size: 4rem;
 
@@ -160,12 +159,20 @@ body {
   top: 10px
 }
 
-.current-temp::before {
+.current-temp.fahrenheit::before {
   position: absolute;
-  content: var(--unit);
+  content: "F";
   font-size: 2rem;
   top: 10px;
   left: 130%;
+}
+
+.current-temp.celsius::before {
+  position: absolute;
+  content: "C";
+  font-size: 2rem;
+  top: 10px;
+  left: 136%;
 }
 
 .visual {
@@ -245,7 +252,6 @@ body {
 
   .location {
     align-items: center;
-    cursor: pointer;
 
     .location-text {
       margin-left: 6px;
@@ -484,7 +490,7 @@ li {
   align-items: flex-start;
   width: 100%;
   height: calc(100% - 1rem);
-  top: 50%;
+  top: 60%;
 
   .label {
     position: relative;

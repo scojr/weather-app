@@ -1,17 +1,22 @@
-import { constructFrom } from "date-fns/fp";
-import { getTodaysDate, getTime, today } from "./date-handler";
+import { getTodaysDate, getTime } from "./date-handler";
 import { getWeather } from "./weather";
 import dom from "./dom-interface";
 import { Graph } from "./graph";
 
-setWeatherResults();
+let weatherQuery;
 
-async function setWeatherResults() {
-  const result = await getWeather();
-  setHeader(result.currentConditions);
-  setCurrentConditions(result.currentConditions);
-  setDailyForecast(result.dailyForecast);
-  drawGraph(formatHoursForGraph(result.dailyData()));
+setWeatherResults("1600 Pennsylvania Avenue NW Washington, D.C. 20500 U.S.");
+
+async function setWeatherResults(query) {
+  weatherQuery = await getWeather(query);
+  drawVisuals();
+}
+
+function drawVisuals() {
+  setHeader(weatherQuery.currentConditions);
+  setCurrentConditions(weatherQuery.currentConditions);
+  setDailyForecast(weatherQuery.dailyForecast);
+  drawGraph(formatHoursForGraph(weatherQuery.dailyData()));
 }
 
 setInterval(setTime, 1000)
@@ -34,9 +39,9 @@ export function setCurrentConditions(input) {
 
   if (input.alerts[0]) {
     set.alertText = input.alerts[0]
-    set.alert.style.display = "block";
+    set.alert.style.display = 'block';
   } else {
-    set.alert.style.display = "none";
+    set.alert.style.display = 'none';
   }
 
   import(`./weather-icons/${input.icon}.svg`).then((resolve) => {
@@ -44,9 +49,11 @@ export function setCurrentConditions(input) {
   })
 
   if (isCelsius) {
-    set.currentTemp.style.setProperty('--unit', `"${'C'}"`);
+    set.currentTemp.classList.add("celsius");
+    set.currentTemp.classList.remove("fahrenheit");
   } else {
-    set.currentTemp.style.setProperty('--unit', `"${'F'}"`);
+    set.currentTemp.classList.add("fahrenheit");
+    set.currentTemp.classList.remove("celsius");
   }
 
   set.currentTemp.textContent = convertCheck(input.temp);
@@ -112,25 +119,25 @@ class Hour {
   }
 }
 
-const fahrenheitButton = document.querySelector(".temp-button.fahrenheit");
-const celsiusButton = document.querySelector(".temp-button.celsius");
+const fahrenheitButton = document.querySelector('.temp-button.fahrenheit');
+const celsiusButton = document.querySelector('.temp-button.celsius');
 
-fahrenheitButton.addEventListener("click", function fahrenheitButtonClick(e) {
+fahrenheitButton.addEventListener('click', function fahrenheitButtonClick(e) {
   if (isCelsius) {
     isCelsius = false;
-    celsiusButton.classList.remove("active");
-    fahrenheitButton.classList.add("active");
-    setWeatherResults();
+    celsiusButton.classList.remove('active');
+    fahrenheitButton.classList.add('active');
+    drawVisuals();
   }
 })
 
 
-celsiusButton.addEventListener("click", function celsiusButtonClick(e) {
+celsiusButton.addEventListener('click', function celsiusButtonClick(e) {
   if (!isCelsius) {
     isCelsius = true;
-    fahrenheitButton.classList.remove("active");
-    celsiusButton.classList.add("active");
-    setWeatherResults();
+    fahrenheitButton.classList.remove('active');
+    celsiusButton.classList.add('active');
+    drawVisuals();
   }
 })
 
@@ -141,23 +148,36 @@ export function convertCheck(unit) {
   else return Math.round(unit);
 }
 
-const chartTempButton = document.querySelector(".temp-button.chart");
-const chartPrecipButton = document.querySelector(".precip-button.chart");
+const chartTempButton = document.querySelector('.temp-button.chart');
+const chartPrecipButton = document.querySelector('.precip-button.chart');
 
-chartTempButton.addEventListener("click", function tempButtonClick(e) {
+chartTempButton.addEventListener('click', function tempButtonClick(e) {
   if (isChartPrecip) {
     isChartPrecip = false;
-    chartPrecipButton.classList.remove("active");
-    chartTempButton.classList.add("active");
-    setWeatherResults();
+    chartPrecipButton.classList.remove('active');
+    chartTempButton.classList.add('active');
+    drawVisuals();
   }
 })
 
-chartPrecipButton.addEventListener("click", function precipButtonClick(e) {
+chartPrecipButton.addEventListener('click', function precipButtonClick(e) {
   if (!isChartPrecip) {
     isChartPrecip = true;
-    chartTempButton.classList.remove("active");
-    chartPrecipButton.classList.add("active");
-    setWeatherResults();
+    chartTempButton.classList.remove('active');
+    chartPrecipButton.classList.add('active');
+    drawVisuals();
   }
 })
+
+const locationSearch = document.querySelector("#location-search");
+const locationSearchButton = document.querySelector(".location-search-button");
+
+locationSearchButton.addEventListener("click", () => {
+  console.log(locationSearch.value);
+  const query = locationSearch.value;
+  searchLocation(query);
+})
+
+function searchLocation(query) {
+  setWeatherResults(query);
+}
