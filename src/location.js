@@ -11,11 +11,20 @@ function setLocation(data) {
 }
 
 export async function getLocation(lat, lon) {
-  const API = `https://us1.locationiq.com/v1/reverse?key=${key}&lat=${lat}&lon=${lon}&format=json`
-  const response = await fetch(API);
-  const data = await response.json();
-  console.log(data);
-  location = setLocation(data);
+  try {
+    const API = `https://us1.locationiq.com/v1/reverse?key=${key}&lat=${lat}&lon=${lon}&format=json`
+    const response = await fetch(API);
+    const data = await response.json();
+    console.log(data);
+    location = setLocation(data);
+  } catch {
+    location = error();
+    function error() {
+      const state = "Error";
+      const city = "Error";
+      return { state, city };
+    }
+  }
 }
 
 // export async function searchLocation(query) {

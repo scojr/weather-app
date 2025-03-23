@@ -8,8 +8,13 @@ let weatherQuery;
 setWeatherResults(checkLocalStorage());
 
 async function setWeatherResults(query) {
-  weatherQuery = await getWeather(query);
-  drawVisuals();
+  try {
+    weatherQuery = await getWeather(query);
+    drawVisuals();
+    localStorage.setItem("userSearch", query);
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 function drawVisuals() {
@@ -181,7 +186,6 @@ locationSearchButton.addEventListener("click", () => {
 
 function searchLocation(query) {
   setWeatherResults(query);
-  localStorage.setItem("userSearch", query);
 }
 
 function checkLocalStorage() {

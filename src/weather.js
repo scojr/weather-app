@@ -2,24 +2,25 @@ import { getLocation, location } from "./location";
 import { today, add7Days, getDayFromDate } from "./date-handler";
 
 const key = "TDN8ACSEEJLR32KZURV9PT8Q6";
-// let zipCode = "77840";
 
 let currentConditions;
 let dailyForecast;
 
 export async function getWeather(query) {
-  const API = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${query}/${today}/${add7Days}?key=${key}`
-  const response = await fetch(API);
-  const data = await response.json();
-  const location = await getLocation(data.latitude, data.longitude);
-  console.log({ data });
-
-  function dailyData() {
-    return data.days;
-  };
-  currentConditions = getCurrentConditions(data);
-  dailyForecast = get7DayForecast(data);
-  return { dailyData, currentConditions, dailyForecast };
+  try {
+    const API = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${query}/${today}/${add7Days}?key=${key}`
+    const response = await fetch(API);
+    const data = await response.json();
+    const location = await getLocation(data.latitude, data.longitude);
+    function dailyData() {
+      return data.days;
+    };
+    currentConditions = getCurrentConditions(data);
+    dailyForecast = get7DayForecast(data);
+    return { dailyData, currentConditions, dailyForecast };
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 function getCurrentConditions(data) {
