@@ -5,7 +5,7 @@ import { Graph } from "./graph";
 
 let weatherQuery;
 
-setWeatherResults("1600 Pennsylvania Avenue NW Washington, D.C. 20500 U.S.");
+setWeatherResults(checkLocalStorage());
 
 async function setWeatherResults(query) {
   weatherQuery = await getWeather(query);
@@ -181,4 +181,14 @@ locationSearchButton.addEventListener("click", () => {
 
 function searchLocation(query) {
   setWeatherResults(query);
+  localStorage.setItem("userSearch", query);
+}
+
+function checkLocalStorage() {
+  const query = localStorage.getItem("userSearch");
+  if (query) {
+    return query
+  } else {
+    return "New York City";
+  }
 }

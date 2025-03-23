@@ -164,7 +164,7 @@ body {
   content: "F";
   font-size: 2rem;
   top: 10px;
-  left: 130%;
+  right: -59%;
 }
 
 .current-temp.celsius::before {
@@ -172,7 +172,7 @@ body {
   content: "C";
   font-size: 2rem;
   top: 10px;
-  left: 136%;
+  right: -58%;
 }
 
 .visual {
