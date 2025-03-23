@@ -15,19 +15,8 @@
 }
 
 :root {
-  --light: white;
-  --dark: black;
-
   --bg-1: #2d07ff;
   --bg-2: #7785f0;
-
-
-  --clear-sky: #669ed6;
-  --dark-sky: #291798;
-  --purple-sky: #584ddd;
-  --french-sky: #77B5FE;
-  --night-sky: #000000;
-  --deep-sky: #00BFFF;
 }
 
 html {
@@ -66,7 +55,7 @@ button {
 
 body {
   background-color: var(--french-sky);
-  color: var(--light);
+  color: white;
   background: linear-gradient(var(--bg-1)30%, var(--bg-2) 100%);
   background-repeat: space;
   background-attachment: scroll;
@@ -471,7 +460,6 @@ li {
 .graph>li {
   position: relative;
   background-color: var(--graph-color);
-  /* background: linear-gradient(#f5b952 60%, var(--clear-sky) 70%); */
   width: 100%;
   clip-path: polygon(-1% 100%,
       -1% calc(100% - var(--previous-value)),

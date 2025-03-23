@@ -61,5 +61,3 @@ export function formatGraphTime(time) {
   }
   return `${hour} ${suffix}`;
 }
-
-// setInterval(updateTime, 1000);

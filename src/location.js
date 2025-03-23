@@ -26,16 +26,3 @@ export async function getLocation(lat, lon) {
     }
   }
 }
-
-// export async function searchLocation(query) {
-//   const API = `https://us1.locationiq.com/v1/search?key=${key}&q=${query}&format=json`
-//   const response = await fetch(API)
-//   const data = await response.json();
-//   queryResponse = data[0];
-//   console.log(data);
-//   const lat = data.lat;
-//   const lon = data.lon;
-//   getWeather(lat, lon);
-// }
-
-// searchLocation("new york city");
